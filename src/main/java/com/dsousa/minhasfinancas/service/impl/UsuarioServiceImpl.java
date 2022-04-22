@@ -3,6 +3,7 @@ package com.dsousa.minhasfinancas.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.dsousa.minhasfinancas.exceptions.RegraNegocioException;
 import com.dsousa.minhasfinancas.model.entity.Usuario;
 import com.dsousa.minhasfinancas.model.repository.UsuarioRepository;
 import com.dsousa.minhasfinancas.service.UsuarioService;
@@ -34,8 +35,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public void validarEmail(String email) {
+		//aqui ele vai retornar o boleano
+	boolean existe = repository.existsByEmail(email);
+	if(existe) {
+		//exception customizada
 		
-		
+		throw new RegraNegocioException("Já existe um usuário cadastrado com este email");
+	}
+	
 	}
 
 }
